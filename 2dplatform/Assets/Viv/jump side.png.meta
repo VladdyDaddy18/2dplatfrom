@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bd6819520dcfa4e49b565421b7c95046
+guid: 5c581fc3e5dde4c7399ddcaaf0009d9c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,10 +129,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: walking side_0
+      name: jump side_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 1
         y: 0
         width: 21
         height: 31
@@ -143,17 +143,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d3312c5fd10949dabd080c89162721d
-      internalID: 329997779
+      spriteID: 9ff8b36a0857a4e5faed8a72a884bbc0
+      internalID: 402046332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: walking side_1
+      name: jump side_1
       rect:
         serializedVersion: 2
-        x: 34
+        x: 64
         y: 0
         width: 21
         height: 30
@@ -164,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edc7fa22d9e774a108d0f80865579712
-      internalID: 118164805
+      spriteID: 9b07fc8bce8424527834afb8daeb1bd9
+      internalID: 1479136871
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: walking side_2
+      name: jump side_2
       rect:
         serializedVersion: 2
-        x: 66
-        y: 0
-        width: 21
-        height: 29
+        x: 138
+        y: 7
+        width: 23
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,19 +185,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4b88e309bcdd4386a221a36483f9ffc
-      internalID: -1403106331
+      spriteID: f13ca25d6129642bca03091581349d02
+      internalID: -2132082159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: walking side_3
+      name: jump side_3
       rect:
         serializedVersion: 2
-        x: 98
+        x: 218
         y: 0
-        width: 21
+        width: 23
         height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -206,19 +206,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0030edd6b3479435db9c5030226ed5b7
-      internalID: -207573512
+      spriteID: 66fadae6bec684fce9038e62343ed00e
+      internalID: 264196432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: walking side_4
+      name: jump side_4
       rect:
         serializedVersion: 2
-        x: 130
+        x: 282
         y: 0
-        width: 21
+        width: 22
         height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -227,20 +227,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cf250a9f9a2d4c03b109d11519cc91a
-      internalID: -279432161
+      spriteID: 83f555f2fbd56480fbd875578f09234c
+      internalID: 283421900
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: walking side_5
+      name: jump side_5
       rect:
         serializedVersion: 2
-        x: 162
+        x: 345
         y: 0
-        width: 21
-        height: 30
+        width: 22
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,50 +248,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6304c427d72fe4eb6865f71099ad2e01
-      internalID: -1634951308
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walking side_6
-      rect:
-        serializedVersion: 2
-        x: 194
-        y: 0
-        width: 21
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 772e50e4d67274d2d8064f4b5f56083f
-      internalID: 1685004978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walking side_7
-      rect:
-        serializedVersion: 2
-        x: 226
-        y: 0
-        width: 21
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aef82d2889d2943538e156ee28561e46
-      internalID: 843037951
+      spriteID: 86f94e0a2865748ce9b3d46a2ab63f62
+      internalID: -1281960306
       vertices: []
       indices: 
       edges: []
@@ -307,14 +265,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      walking side_6: 1685004978
-      walking side_1: 118164805
-      walking side_2: -1403106331
-      walking side_4: -279432161
-      walking side_0: 329997779
-      walking side_3: -207573512
-      walking side_5: -1634951308
-      walking side_7: 843037951
+      jump side_5: -1281960306
+      jump side_4: 283421900
+      jump side_2: -2132082159
+      jump side_0: 402046332
+      jump side_3: 264196432
+      jump side_1: 1479136871
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
