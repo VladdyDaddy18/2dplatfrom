@@ -19,6 +19,15 @@ public class Player : MonoBehaviour
    public LayerMask whatIsGround;
    public float groundCheckDistance;
    public bool isGrounded;
+   //Attempt at wall detection
+
+   private bool isWallDetected;
+
+   public float wallCheckDistance;  
+   private bool canWallSlide;
+   private bool isWallSliding;
+   
+   //end collison for wall//
 
    private bool facingRight = true;
    private int facingDirection = 1;
@@ -48,15 +57,18 @@ public class Player : MonoBehaviour
     
     
 
-         if(Input.GetKeyDown(KeyCode.Space))//whole if statement is  JumpButton()
-        {
-            JumpButton();
-        }
+         
+        
     
         if(isGrounded)
             {
                 canDoubleJump = true;
-            }       
+            }      
+        if(canWallSlide)
+            {
+                isWallSliding = true;
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .01f);
+            } 
 
 
          Move();
@@ -85,19 +97,7 @@ private void FlipController()
         Flip();
     }
 }
-    private void JumpButton()
-    {
-        if(isGrounded)
-            {
-             Jump();
-            }
-            
-            else if (canDoubleJump)
-            {
-                canDoubleJump = false;
-                Jump();
-            }
-    }
+    
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -111,10 +111,39 @@ private void FlipController()
     private void CollisionCheck()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
+
+        if(isWallDetected && rb.velocity.y < 0)
+        {
+            canWallSlide = true;
+        }
+        if(!isWallDetected)
+        {
+            canWallSlide = false;
+        }
     }
     private void InputCheck()
     {
          movingInput = Input.GetAxis("Horizontal");
+
+         if(Input.GetAxis("Vertical") < 0)
+            canWallSlide = false;
+            
+        if(Input.GetKeyDown(KeyCode.Space))
+            JumpButton();
+    }
+    private void JumpButton()
+    {
+        if(isGrounded)
+            {
+             Jump();
+            }
+            
+            else if (canDoubleJump)
+            {
+                canDoubleJump = false;
+                Jump();
+            }
     }
     private void AnimationControllers()
     {
@@ -126,8 +155,13 @@ private void FlipController()
 
     }
 
+
+//This is used to draw the line to see the ground check
     private void OnDrawGizmos() 
     {
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckDistance, transform.position.z));
+
+        //Attempt at collision for wall//
+        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + wallCheckDistance * facingDirection, transform.position.y));
     }
 }
