@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
    public float jumpForce;
    private bool canDoubleJump;
    private float movingInput;
+   private bool canMove;
+   public Vector2 wallJumpDirection;
 
 
    [Header ("Collison Info")]
@@ -45,24 +47,15 @@ public class Player : MonoBehaviour
     {
 
         //switching to moving animation
-
-        
-
         AnimationControllers();
         CollisionCheck();
         InputCheck();
         FlipController();
-
         
-    
-    
-
-         
-        
-    
-        if(isGrounded)
+    if(isGrounded)
             {
                 canDoubleJump = true;
+                canMove = true;
             }      
         if(canWallSlide)
             {
@@ -71,8 +64,8 @@ public class Player : MonoBehaviour
             } 
 
 
-         Move();
-
+        Move();
+        
     
     }
 
@@ -87,12 +80,12 @@ private void Flip()
 }
 private void FlipController()
 {
-    if(facingRight && movingInput < 0)
+    if(facingRight && rb.velocity.x < 0)
     {
         Flip();
 
     }
-    else if (!facingRight && movingInput > 0)
+    else if (!facingRight && rb.velocity.x > 0)
     {
         Flip();
     }
@@ -105,9 +98,15 @@ private void FlipController()
 
     private void Move()
     {
+        if(canMove)
         rb.velocity = new Vector2(moveSpeed * movingInput, rb.velocity.y);
     }
 
+    private void wallJump()
+    {
+       canMove = false;
+       rb.velocity = new Vector2(wallJumpDirection.x * -facingDirection, wallJumpDirection.y); 
+    }
     private void CollisionCheck()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -119,8 +118,10 @@ private void FlipController()
         }
         if(!isWallDetected)
         {
+            isWallSliding = false;
             canWallSlide = false;
         }
+
     }
     private void InputCheck()
     {
@@ -134,7 +135,11 @@ private void FlipController()
     }
     private void JumpButton()
     {
-        if(isGrounded)
+        if(isWallSliding)
+        {
+            wallJump();
+        }
+        else if(isGrounded)
             {
              Jump();
             }
@@ -144,6 +149,7 @@ private void FlipController()
                 canDoubleJump = false;
                 Jump();
             }
+            canWallSlide = false;
     }
     private void AnimationControllers()
     {
@@ -151,6 +157,8 @@ private void FlipController()
 
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isGrounded", isGrounded);
+        anim.SetBool("isWallSliding", isWallSliding);
+        anim.SetBool("isWallDetected", isWallDetected);
         anim.SetFloat("yVelocity", rb.velocity.y);
 
     }
