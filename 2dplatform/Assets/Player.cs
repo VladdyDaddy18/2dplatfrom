@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
    private float movingInput;
    private bool canMove;
    public Vector2 wallJumpDirection;
+   public float doubleJumpForce;
+
+   private float defaultJumpForce;
 
 
    [Header ("Collison Info")]
@@ -39,7 +42,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
+        defaultJumpForce = jumpForce;
     }
 
     // Update is called once per frame
@@ -59,6 +62,10 @@ public class Player : MonoBehaviour
             }      
         if(canWallSlide)
             {
+                //Attempt to fix double jump bug//
+                canDoubleJump = true;
+                //Good Fix//
+            
                 isWallSliding = true;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .01f);
             } 
@@ -146,8 +153,11 @@ private void FlipController()
             
             else if (canDoubleJump)
             {
+                canMove = true;
                 canDoubleJump = false;
+                jumpForce = doubleJumpForce;
                 Jump();
+                jumpForce = defaultJumpForce;
             }
             canWallSlide = false;
     }
