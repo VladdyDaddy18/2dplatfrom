@@ -220,14 +220,25 @@ private void FlipController()
             canWallSlide = false;
     }
 
-    public void KnockBack(int direction)
+    public void KnockBack(Transform damageTransform)
     {
         if(!canBeKnocked)
             return;
 
         isKnocked = true;
         canBeKnocked = false;
-        rb.velocity = new Vector2(knockBackDirection.x * direction, knockBackDirection.y);
+
+
+        #region Define horizontal Knockback
+        int hDirection = 0;
+        if(transform.position.x > damageTransform.position.x)
+            hDirection = 1;
+        else if (transform.position.x < damageTransform.position.x)
+            hDirection = -1;
+
+        #endregion
+       
+        rb.velocity = new Vector2(knockBackDirection.x * hDirection, knockBackDirection.y);
 
         Invoke("CancelKnockBack", knockBackTime);
         Invoke("AllowKnockBack", knockBackProtectionTime);

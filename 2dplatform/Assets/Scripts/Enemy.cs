@@ -17,10 +17,7 @@ public class Enemy : MonoBehaviour
         {
             Player player = collision.collider.GetComponent<Player>();
 
-        if(player.transform.position.x > transform.position.x)
-            player.KnockBack(1);
-        else if (player.transform.position.x < transform.position.x)
-            player.KnockBack(-1);
-         }
+            player.KnockBack(transform);
+        }
     }
 }

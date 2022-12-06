@@ -13,12 +13,7 @@ protected virtual void OnTriggerEnter2D(Collider2D collision)
         Player player = collision.GetComponent<Player>();
         
         
-        if(player.transform.position.x > transform.position.x)
-            player.KnockBack(1);
-        else if (player.transform.position.x < transform.position.x)
-            player.KnockBack(-1);
-        else
-            player.KnockBack(0);
+       player.KnockBack(transform);
     }
 }
 
