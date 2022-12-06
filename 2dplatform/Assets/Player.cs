@@ -25,6 +25,12 @@ public class Player : MonoBehaviour
 
    private float defaultJumpForce;
 
+   [Header("Knocked back info")]
+   [SerializeField] private Vector2 knockBackDirection;
+   [SerializeField] private float knockBackTime;
+   [SerializeField] private float knockBackProtectionTime;
+   private bool isKnocked;
+   private bool canBeKnocked = true;
 
    [Header ("Collison Info")]
    public LayerMask whatIsGround;
@@ -57,6 +63,9 @@ public class Player : MonoBehaviour
 
         //switching to moving animation
         AnimationControllers();
+        if(isKnocked)
+            return;
+
         CollisionCheck();
         InputCheck();
         FlipController();
@@ -188,10 +197,33 @@ private void FlipController()
             }
             canWallSlide = false;
     }
+
+    public void KnockBack(int direction)
+    {
+        if(!canBeKnocked)
+            return;
+
+        isKnocked = true;
+        canBeKnocked = false;
+        rb.velocity = new Vector2(knockBackDirection.x * direction, knockBackDirection.y);
+
+        Invoke("CancelKnockBack", knockBackTime);
+        Invoke("AllowKnockBack", knockBackProtectionTime);
+    }
+
+    private void CancelKnockBack()
+    {
+        isKnocked = false;
+    }
+
+    private void AllowKnockBack()
+    {
+        canBeKnocked = true;
+    }
     private void AnimationControllers()
     {
         bool isMoving = rb.velocity.x != 0;
-
+        anim.SetBool("isKnocked", isKnocked);
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isWallSliding", isWallSliding);
