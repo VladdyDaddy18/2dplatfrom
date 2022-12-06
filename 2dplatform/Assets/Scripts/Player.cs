@@ -33,14 +33,17 @@ public class Player : MonoBehaviour
    private bool canBeKnocked = true;
 
    [Header ("Collison Info")]
-   public LayerMask whatIsGround;
-   public float groundCheckDistance;
+   [SerializeField] private LayerMask whatIsGround;
+   [SerializeField] private float groundCheckDistance;
+   [SerializeField] private float wallCheckDistance;
+   [SerializeField] private Transform enemyCheck;
+   [SerializeField] private float enemyCheckRadius;
    public bool isGrounded;
    //Attempt at wall detection
 
    private bool isWallDetected;
 
-   public float wallCheckDistance;  
+     
    private bool canWallSlide;
    private bool isWallSliding;
    
@@ -63,56 +66,75 @@ public class Player : MonoBehaviour
 
         //switching to moving animation
         AnimationControllers();
-        if(isKnocked)
+        if (isKnocked)
             return;
 
         CollisionCheck();
         InputCheck();
         FlipController();
+        CheckForEnemy();
 
         bufferJumpCounter -= Time.deltaTime;
         cayoteJumpCounter -= Time.deltaTime;
-        
-    if(isGrounded)
-            {
-                canDoubleJump = true;
-                canMove = true;
 
-                if(bufferJumpCounter > 0)
-                    {
-                        bufferJumpCounter = - 1;
-                        Jump();
-                    }
-                canHaveCoyoteJump = true;
+        if (isGrounded)
+        {
+            canDoubleJump = true;
+            canMove = true;
+
+            if (bufferJumpCounter > 0)
+            {
+                bufferJumpCounter = -1;
+                Jump();
             }
-            else
+            canHaveCoyoteJump = true;
+        }
+        else
+        {
+            if (canHaveCoyoteJump)
             {
-                if (canHaveCoyoteJump)
-                {
-                    canHaveCoyoteJump = false;
-                    cayoteJumpCounter = cayoteJumpTime;
-                }
-            }      
-        if(canWallSlide)
-            {
-                //Attempt to fix double jump bug//
-                canDoubleJump = true;
-                //Good Fix//
-            
-                isWallSliding = true;
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .01f);
-            } 
+                canHaveCoyoteJump = false;
+                cayoteJumpCounter = cayoteJumpTime;
+            }
+        }
+        if (canWallSlide)
+        {
+            //Attempt to fix double jump bug//
+            canDoubleJump = true;
+            //Good Fix//
+
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .01f);
+        }
 
 
         Move();
-        
-    
+
+
+    }
+
+    private void CheckForEnemy()
+    {
+        Collider2D[] hitedColliders = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius);
+
+        foreach (var enemy in hitedColliders)
+        {
+            if (enemy.GetComponent<Enemy>() != null)
+            {
+                if(rb.velocity.y < 0)
+                {
+                    enemy.GetComponent<Enemy>().Damage();
+                    Jump();
+                }
+                
+            }
+        }
     }
 
 
-//Extracted Methods//
+    //Extracted Methods//
 
-private void Flip()
+    private void Flip()
 {
     facingDirection = facingDirection * -1;
     facingRight = !facingRight;
@@ -240,5 +262,7 @@ private void FlipController()
 
         //Attempt at collision for wall//
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + wallCheckDistance * facingDirection, transform.position.y));
+        Gizmos.DrawWireSphere(enemyCheck.position, enemyCheckRadius);
     }
+
 }
