@@ -19,7 +19,9 @@ public class Enemy_Mushroom : Enemy
         
        
         if(idleTimeCounter <= 0)
-            rb.velocity = new Vector2(speed * facingDirection, rb.velocity.y);   
+            rb.velocity = new Vector2(speed * facingDirection, rb.velocity.y); 
+        else
+            rb.velocity = Vector2.zero;  
 
         idleTimeCounter -= Time.deltaTime; 
 
@@ -32,6 +34,8 @@ public class Enemy_Mushroom : Enemy
             
 
         }
+
+        anim.SetFloat("xVelocity", rb.velocity.x);
             
     }
 }

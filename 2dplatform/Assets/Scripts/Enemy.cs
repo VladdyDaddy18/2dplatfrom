@@ -28,7 +28,11 @@ public class Enemy : MonoBehaviour
    
     public void Damage()
     {
-        Debug.Log("I was damaged");
+        anim.SetTrigger("gotHit");
+    }
+
+    public void DestroyMe()
+    {
         Destroy(gameObject);
     }
 
