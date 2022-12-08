@@ -36,11 +36,12 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) 
+    private void OnTriggerEnter2D(Collider2D collision ) 
+        
     {
-        if(collision.collider.GetComponent<Player>() != null)
+        if(collision.GetComponent<Player>() != null)
         {
-            Player player = collision.collider.GetComponent<Player>();
+            Player player = collision.GetComponent<Player>();
 
             player.KnockBack(transform);
         }
