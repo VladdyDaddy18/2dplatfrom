@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     protected Animator anim;
     protected Rigidbody2D rb;
 
-    protected int facingDirection = 1;
+    protected int facingDirection = -1;
 
     protected virtual void Start() 
     {

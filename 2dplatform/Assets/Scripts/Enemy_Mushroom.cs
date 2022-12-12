@@ -11,7 +11,7 @@ public class Enemy_Mushroom : Enemy
     protected override void Start()
     {
         base.Start();
-        facingDirection = -1;
+        
     }
 
     private void Update() 
