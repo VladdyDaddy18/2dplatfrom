@@ -16,6 +16,6 @@ public class Enemy_Rino : Enemy
     // Update is called once per frame
     void Update()
     {
-        
+        rb.velocity = new Vector2(speed * facingDirection, rb.velocity.y);
     }
 }
