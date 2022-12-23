@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     protected bool wallDetected;
     protected bool groundDetected;
 
+    public bool invincible;
+
 
 
     protected Animator anim;
@@ -28,7 +30,8 @@ public class Enemy : MonoBehaviour
    
     public void Damage()
     {
-        anim.SetTrigger("gotHit");
+        if(!invincible)
+             anim.SetTrigger("gotHit");
     }
 
     public void DestroyMe()
