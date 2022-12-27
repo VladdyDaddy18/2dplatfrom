@@ -15,6 +15,10 @@ public class Enemy : MonoBehaviour
 
     public bool invincible;
 
+    [SerializeField] protected float speed;
+    [SerializeField] protected float idleTime = 2;
+                     protected float idleTimeCounter;
+
 
 
     protected Animator anim;
@@ -26,6 +30,26 @@ public class Enemy : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();    
+    }
+
+
+//making new function for walkaround to speed up new enemy scripts.
+    protected virtual void WalkAround()
+    {
+        if(idleTimeCounter <= 0)
+                rb.velocity = new Vector2(speed * facingDirection, rb.velocity.y); 
+            else
+                rb.velocity = Vector2.zero;  
+
+            idleTimeCounter -= Time.deltaTime; 
+
+            
+
+            if(wallDetected || !groundDetected)
+            {
+                idleTimeCounter = idleTime;
+                Flip();
+            }
     }
    
     public void Damage()

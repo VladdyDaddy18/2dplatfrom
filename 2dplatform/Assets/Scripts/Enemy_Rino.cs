@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Enemy_Rino : Enemy
 {
-
-    [SerializeField] private float speed;
+    [Header ("Rino Specific")]
     [SerializeField] private float aggressiveSpeed;
-    [SerializeField] private float idleTime = 2;
-                     private float idleTimeCounter;
     [SerializeField] private float shockTime;
                      private float shockTimeCounter;
 
@@ -35,20 +32,7 @@ public class Enemy_Rino : Enemy
         if(!isAggressive)
         {
 
-            if(idleTimeCounter <= 0)
-                rb.velocity = new Vector2(speed * facingDirection, rb.velocity.y); 
-            else
-                rb.velocity = Vector2.zero;  
-
-            idleTimeCounter -= Time.deltaTime; 
-
-            
-
-            if(wallDetected || !groundDetected)
-            {
-                idleTimeCounter = idleTime;
-                Flip();
-            }
+            WalkAround();
             
         }
 
