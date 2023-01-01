@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     protected bool wallDetected;
     protected bool groundDetected;
 
-    public bool invincible;
+    [HideInInspector] public bool invincible;
 
     [SerializeField] protected float speed;
     [SerializeField] protected float idleTime = 2;

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Enemy_Mushroom : Enemy
 {
-
-
     protected override void Start()
     {
         base.Start();
