@@ -17,7 +17,7 @@ public class Enemy_Radish : Enemy
     [SerializeField] private float aggroTimeCounter;
                      private bool aggresive; 
                         
-
+    [SerializeField] private float flyForce;
 
 
     protected override void Start()
@@ -57,7 +57,7 @@ public class Enemy_Radish : Enemy
         {
             if (groundBelowDetected && !groundAboveDetected)
             {
-                rb.velocity = new Vector2(0,1);
+                rb.velocity = new Vector2(0,flyForce);
             }
         }
 
