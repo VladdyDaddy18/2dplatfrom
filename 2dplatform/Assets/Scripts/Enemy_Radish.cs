@@ -5,14 +5,18 @@ using UnityEngine;
 public class Enemy_Radish : Enemy
 {
 
-    private bool groundBelowDetected;
+    private RaycastHit2D groundBelowDetected;
     private bool groundAboveDetected;
 
     [Header ("Radish Specifics")]
     [SerializeField] private float ceilingDistance;
     [SerializeField] private float floorDistance;
 
-    [SerializeField] private bool aggresive;
+
+    [SerializeField] private float aggroTime;
+    [SerializeField] private float aggroTimeCounter;
+                     private bool aggresive; 
+                        
 
 
 
@@ -21,10 +25,34 @@ public class Enemy_Radish : Enemy
         base.Start();
     }
 
+    public override void Damage()
+    {
+        
 
-   
+        if (!aggresive)
+        {
+            aggroTimeCounter = aggroTime;
+            rb.gravityScale = 12;
+            aggresive = true;
+        }
+        else
+        {
+            base.Damage();
+        }
+    }
+
     void Update()
     {
+
+        aggroTimeCounter -= Time.deltaTime;
+
+        if (aggroTimeCounter < 0 && !groundAboveDetected)
+            {
+                rb.gravityScale = 1;
+                aggresive = false;
+            }
+
+
         if(!aggresive)
         {
             if (groundBelowDetected && !groundAboveDetected)
@@ -35,7 +63,7 @@ public class Enemy_Radish : Enemy
 
         else
         {
-            if(groundDetected)
+            if(groundBelowDetected.distance < 1.25f)
                 WalkAround();
         }   
 
