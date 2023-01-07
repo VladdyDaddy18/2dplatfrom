@@ -6,7 +6,7 @@ public class Enemy_Radish : Enemy
 {
 
     private RaycastHit2D groundBelowDetected;
-    private bool groundAboveDetected;
+    private RaycastHit2D groundAboveDetected;
 
     [Header ("Radish Specifics")]
     [SerializeField] private float ceilingDistance;
@@ -23,6 +23,7 @@ public class Enemy_Radish : Enemy
     protected override void Start()
     {
         base.Start();
+        flyForce = 2;
     }
 
     public override void Damage()

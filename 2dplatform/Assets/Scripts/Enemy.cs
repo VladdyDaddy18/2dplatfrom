@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] protected LayerMask whatIsGround;
+    [SerializeField] protected LayerMask whatToIgnore;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected float wallCheckDistance;
     [SerializeField] protected Transform wallCheck;
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float idleTime = 2;
                      protected float idleTimeCounter;
 
+    protected bool canMove = true;
 
 
     protected Animator anim;
@@ -32,11 +34,13 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();    
     }
 
+    
+
 
 //making new function for walkaround to speed up new enemy scripts.
     protected virtual void WalkAround()
     {
-        if(idleTimeCounter <= 0)
+        if(idleTimeCounter <= 0 && canMove)
                 rb.velocity = new Vector2(speed * facingDirection, rb.velocity.y); 
             else
                 rb.velocity = Vector2.zero;  
@@ -55,7 +59,11 @@ public class Enemy : MonoBehaviour
     public virtual void Damage()
     {
         if(!invincible)
-             anim.SetTrigger("gotHit");
+        {
+            canMove = false;
+            anim.SetTrigger("gotHit");
+        }
+             
     }
 
     public void DestroyMe()
