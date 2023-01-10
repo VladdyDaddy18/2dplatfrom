@@ -350,6 +350,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4ff55d9bd384b808771293ba1152fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  whatToIgnore:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0
+  wallCheckDistance: 0
+  wallCheck: {fileID: 0}
+  groundCheck: {fileID: 0}
+  invincible: 0
+  speed: 2
+  idleTime: 2
+  activeTime: 2
 --- !u!58 &442930297
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class Enemy_Rino : Enemy
 
     [SerializeField] private LayerMask whatToIgnore;
     private RaycastHit2D playerDetection;
-    private bool isAggressive;
+    private bool aggresive;
     protected override void Start()
     {
         base.Start();
@@ -26,10 +26,10 @@ public class Enemy_Rino : Enemy
 
         playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection,25, ~whatToIgnore);
         if(playerDetection.collider.GetComponent<Player>() != null)
-            isAggressive = true;
+            aggresive = true;
 
 
-        if(!isAggressive)
+        if(!aggresive)
         {
 
             WalkAround();
@@ -50,7 +50,7 @@ public class Enemy_Rino : Enemy
             {
                 invincible = true;
                 Flip();
-                isAggressive = false;
+                aggresive = false;
             }
             shockTimeCounter -= Time.deltaTime;
 

@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
                      protected float idleTimeCounter;
 
     protected bool canMove = true;
+    protected bool aggresive;
 
 
     protected Animator anim;
@@ -96,7 +97,10 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnDrawGizmos() 
     {
-        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDirection, wallCheck.position.y));
+        if(groundCheck != null)
+            Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+        
+        if(wallCheck != null)
+            Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDirection, wallCheck.position.y));
     }
 }

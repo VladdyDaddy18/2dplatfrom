@@ -15,7 +15,7 @@ public class Enemy_Radish : Enemy
 
     [SerializeField] private float aggroTime;
     [SerializeField] private float aggroTimeCounter;
-                     private bool aggresive; 
+                      
                         
     [SerializeField] private float flyForce;
 
