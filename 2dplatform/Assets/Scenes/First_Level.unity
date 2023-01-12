@@ -362,7 +362,7 @@ MonoBehaviour:
   groundCheck: {fileID: 0}
   invincible: 0
   speed: 2
-  idleTime: 2
+  idleTime: 4
   activeTime: 2
 --- !u!58 &442930297
 CircleCollider2D:

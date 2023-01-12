@@ -10,15 +10,19 @@ public class Enemy_Ghost : Enemy
                      private float activeTimeCounter = 4;
 
     private Transform player;
+    private SpriteRenderer sr;
 
     protected override void Start()
     {
         player = GameObject.Find("Player").transform;
+        sr = GetComponent<SpriteRenderer>();
         base.Start();
+        aggresive = true;
+        invincible = true;
         
     }
-   
 
+    
     void Update()
     {
         activeTimeCounter -= Time.deltaTime;
@@ -37,17 +41,41 @@ public class Enemy_Ghost : Enemy
            }
         if(idleTimeCounter < 0 && activeTimeCounter < 0 && !aggresive)
            {
+            ChoosePosition();
             anim.SetTrigger("appear");
             aggresive = true;
             activeTimeCounter = activeTime;
 
            }
-           
         
+        if ( facingDirection == -1 && transform.position.x < player.transform.position.x)
+                Flip();
+        else if (facingDirection == 1 && transform.position.x > player.transform.position.x)
+                Flip();
     }
- public override void Damage()
+
+    private void ChoosePosition()
     {
-        base.Damage();
+        transform.position = new Vector2(player.transform.position.x + 7, player.transform.position.y + 7);
+    }
+
+    public void Disappear()
+    {
+        sr.enabled = false;
+    }
+
+    public void Appear()
+    {
+        sr.enabled = true;
+    }
+
+
+ 
+
+protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(aggresive)
+            base.OnTriggerEnter2D(collision);
     }
     
 }
