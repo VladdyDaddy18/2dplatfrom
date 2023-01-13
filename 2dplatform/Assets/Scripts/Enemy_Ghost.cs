@@ -12,6 +12,8 @@ public class Enemy_Ghost : Enemy
     private Transform player;
     private SpriteRenderer sr;
 
+    [SerializeField] private float[] xOffset;
+
     protected override void Start()
     {
         player = GameObject.Find("Player").transform;
@@ -56,7 +58,9 @@ public class Enemy_Ghost : Enemy
 
     private void ChoosePosition()
     {
-        transform.position = new Vector2(player.transform.position.x + 7, player.transform.position.y + 7);
+        float _xOffset = xOffset[Random.Range(0,xOffset.Length)];
+        float _yOffset = Random.Range(-10,10);
+        transform.position = new Vector2(player.transform.position.x + _xOffset, player.transform.position.y + _yOffset);
     }
 
     public void Disappear()
