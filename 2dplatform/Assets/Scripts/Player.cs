@@ -32,6 +32,21 @@ public class Player : MonoBehaviour
    private bool isKnocked;
    private bool canBeKnocked = true;
 
+
+
+   //Attempting to add Lemon attack//
+
+    private bool isAttacking = false;
+    [SerializeField] private GameObject lemonPrefab;
+    [SerializeField] private Transform lemonPoint;
+    [SerializeField] private float speed;
+
+
+
+   //End Lemon Attack Attempt//
+
+
+
    [Header ("Collison Info")]
    [SerializeField] private LayerMask whatIsGround;
    [SerializeField] private float groundCheckDistance;
@@ -106,6 +121,12 @@ public class Player : MonoBehaviour
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .01f);
         }
+
+        //Attempt to add lemon Start Delete here if this fails//
+
+        
+
+        //End lemon attack attempt//
 
 
         Move();
@@ -199,6 +220,11 @@ private void FlipController()
             
         if(Input.GetKeyDown(KeyCode.Space))
             JumpButton();
+        
+        //lemon attack code//
+        if(Input.GetKeyDown(KeyCode.A))
+            isAttacking = true;
+        //lemonattack code end//
     }
     private void JumpButton()
     {
@@ -267,8 +293,21 @@ private void FlipController()
         anim.SetBool("isWallSliding", isWallSliding);
         anim.SetBool("isWallDetected", isWallDetected);
         anim.SetFloat("yVelocity", rb.velocity.y);
+        //Lemon Attack attempt//
+
+        anim.SetBool("isAttacking", isAttacking);
 
     }
+
+    //LemonAttack Attempt
+    private void AttackEvent()
+    {
+        GameObject newLemon = Instantiate(lemonPrefab, lemonPoint.transform.position, lemonPoint.transform.rotation);
+
+        newLemon.GetComponent<Lemon>().SetupSpeed(speed * facingDirection, 0);
+    }
+
+    //end lemon attack attempt
 
 
 //This is used to draw the line to see the ground check
