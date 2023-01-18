@@ -7,11 +7,15 @@ public class Enemy_Plant : Enemy
     [Header("Plant spesifics")]
 
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform bulletPoint;
-
+    [SerializeField] private Transform bulletOrigin;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private  bool facingRight;
     protected override void Start()
     {
         base.Start();
+
+        if(facingRight)
+            Flip();
 
         if(groundCheck == null)
             groundCheck = transform;
@@ -37,12 +41,12 @@ public class Enemy_Plant : Enemy
 
             }   
     }
- 
+   
 
     private void AttackEvent()
     {
-        GameObject newBullet = Instantiate(bulletPrefab, bulletPoint.transform.position, bulletPoint.transform.rotation);
+        GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
 
-        newBullet.GetComponent<Bullet>().SetupSpeed(speed * facingDirection, 0);
+        newBullet.GetComponent<Bullet>().SetupSpeed(bulletSpeed * facingDirection, 0);
     }
 }

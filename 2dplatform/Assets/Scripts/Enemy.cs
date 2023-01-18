@@ -84,7 +84,7 @@ public class Enemy : Trap
 
     protected virtual void CollisionCheck()
     {
-        playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection,25, ~whatToIgnore);
+        playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection,100, ~whatToIgnore);
         groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
         wallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, groundCheckDistance, whatIsGround);
     }
