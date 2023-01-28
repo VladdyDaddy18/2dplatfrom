@@ -11,11 +11,13 @@ public class Enemy_Bee : Enemy
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private Transform playerCheck;
     [SerializeField] private float _yOffset;
+    [SerializeField] private float aggroSpeed;
 
     private bool playerDetected;
+    private int idlePointIndex;
     private Transform player;
     private float defaultSpeed;
-    private bool attackOver;
+    
 
     [Header("Bullet Specifics")]
     [SerializeField] private GameObject bulletPrefab;
@@ -26,6 +28,7 @@ public class Enemy_Bee : Enemy
     {
         defaultSpeed = speed;   
         base.Start();
+        player = GameObject.Find("Player").transform;
     }
 
 
@@ -33,7 +36,13 @@ public class Enemy_Bee : Enemy
     // Update is called once per frame
     void Update()
     {
+        bool idle = idleTimeCounter > 0;
+
+        anim.SetBool("idle", idle);
         idleTimeCounter -= Time.deltaTime;
+
+        if (idle)
+            return;
         if(idleTimeCounter > 0)
         {
             return;
@@ -41,30 +50,39 @@ public class Enemy_Bee : Enemy
 
         playerDetected = Physics2D.OverlapCircle(playerCheck.position, checkRadius, whatIsPlayer);
 
-        if(playerDetected)
+        if(playerDetected && !aggresive)
         {
             aggresive = true;
+            speed = aggroSpeed;
         }
 
         if (!aggresive)
         {
-            transform.position = Vector2.MoveTowards(transform.position, idlepoints[0].position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, idlepoints[idlePointIndex].position, speed * Time.deltaTime);
+
+            if (Vector2.Distance(transform.position, idlepoints[idlePointIndex].position) < .1f)
+            {
+                idlePointIndex++;
+
+                if(idlePointIndex >= idlepoints.Length)
+                    idlePointIndex = 0;
+            }
+        
         }
         else
         {
-            if(!attackOver)
-            {
+         
                 Vector2 newPosition = new Vector2(player.transform.position.x, player.transform.position.y + _yOffset);
                 transform.position = Vector2.MoveTowards(transform.position, newPosition, speed * Time.deltaTime);
 
                 float xDifference = transform.position.x - player. position.x;
+                
                 if(Mathf.Abs(xDifference) < .15f)
                 {
                     anim.SetTrigger("attack");
 
                 }
                
-            }
         }
     }
      private void AttackEvent()
@@ -75,5 +93,12 @@ public class Enemy_Bee : Enemy
 
         idleTimeCounter = idleTime;
         aggresive = false;
+        speed = defaultSpeed;
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.DrawWireSphere(playerCheck.position, checkRadius);
     }
 }
