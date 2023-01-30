@@ -9,9 +9,9 @@ public class Enemy_Rino : Enemy
     [SerializeField] private float shockTime;
                      private float shockTimeCounter;
 
-    [SerializeField] private LayerMask whatToIgnore;
+    //[SerializeField] private LayerMask whatToIgnore;
     
-    private bool aggresive;
+   //private bool aggresive;
     protected override void Start()
     {
         base.Start();
@@ -24,6 +24,7 @@ public class Enemy_Rino : Enemy
     void Update()
     {
 
+        CollisionCheck();
         
         if(playerDetection.collider.GetComponent<Player>() != null)
             aggresive = true;
@@ -38,6 +39,11 @@ public class Enemy_Rino : Enemy
 
         else
         {
+            if(!groundDetected)
+            {
+                Flip();
+                aggresive = false;
+            }
             rb.velocity = new Vector2(aggressiveSpeed * facingDirection, rb.velocity.y);
 
             if(wallDetected && invincible)
@@ -56,7 +62,7 @@ public class Enemy_Rino : Enemy
 
         }
 
-        CollisionCheck();
+        
         AnimationControllers();
         
         
