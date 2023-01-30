@@ -90,6 +90,7 @@ public class Enemy_Bee : Enemy
         GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
 
         newBullet.GetComponent<Bullet>().SetupSpeed(0, -bulletSpeed);
+        Destroy(newBullet, 2f);
 
         idleTimeCounter = idleTime;
         aggresive = false;
