@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy_Trunk : Enemy
 {
+
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletOrigin;
+    [SerializeField] private float bulletSpeed;
     protected override void Start()
     {
         base.Start();
@@ -13,6 +17,13 @@ public class Enemy_Trunk : Enemy
     void Update()
     {
         
+        
+        CollisionCheck();
+
+
+
+
+
     }
     protected override void OnDrawGizmos()
     {
@@ -26,5 +37,15 @@ public class Enemy_Trunk : Enemy
             Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDirection, wallCheck.position.y));
             Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + playerDetection.distance * facingDirection, wallCheck.position.y));
            }
+
+        //Gizmos.DrawWireSphere(playerCheck.position, checkRadius);
+    }
+
+      private void AttackEvent()
+    {
+        GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
+
+        newBullet.GetComponent<Bullet>().SetupSpeed(bulletSpeed * facingDirection, 0);
     }
 }
+
