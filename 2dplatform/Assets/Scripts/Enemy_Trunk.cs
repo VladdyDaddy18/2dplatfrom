@@ -5,12 +5,22 @@ using UnityEngine;
 public class Enemy_Trunk : Enemy
 {
 
+
+    [SerializeField] private float checkRadius;
+    [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletOrigin;
     [SerializeField] private float bulletSpeed;
+
+    private bool playerDetected;
+
+    [Header("Bullet Specifics")]
+    [SerializeField] private float attackCoolDown;
+                     private float attackCoolDownCounter;
     protected override void Start()
     {
         base.Start();
+        
     }
 
     // Update is called once per frame
@@ -20,21 +30,32 @@ public class Enemy_Trunk : Enemy
         
         CollisionCheck();
 
-        WalkAround();
-        anim.SetFloat("xVelocity", rb.velocity.x);
+        if(!canMove)
+        {
+            rb.velocity = new Vector2(0,0);
+        }
 
-         idleTimeCounter -= Time.deltaTime;
+      
+       anim.SetFloat("xVelocity", rb.velocity.x);
 
-        bool playerDetected = playerDetection.collider.GetComponent<Player>() != null;
+         attackCoolDownCounter -= Time.deltaTime;
 
-        if(idleTimeCounter < 0 && playerDetected)
+        if (playerDetection.collider.GetComponent<Player>() != null)
+        {
+            if(attackCoolDownCounter < 0)
             {
-                idleTimeCounter = idleTime;
-                anim.SetTrigger("attack");
+                 attackCoolDownCounter = attackCoolDown;
+                 anim.SetTrigger("attack");
+                 canMove = false;
+            }
+            
+        }
+        else
+            {
+                WalkAround();
+            }
 
-            } 
-
-
+    
 
     }
     protected override void OnDrawGizmos()
@@ -53,12 +74,23 @@ public class Enemy_Trunk : Enemy
         //Gizmos.DrawWireSphere(playerCheck.position, checkRadius);
     }
 
+     protected override void CollisionCheck()
+    {
+        base.CollisionCheck();
+        playerDetected = Physics2D.OverlapCircle(transform.position, checkRadius, whatIsPlayer);
+    }
+
       private void AttackEvent()
     {
         GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
 
         newBullet.GetComponent<Bullet>().SetupSpeed(bulletSpeed * facingDirection, 0);
         Destroy(newBullet, 2f);
+    }
+
+    private void ReturnMovement()
+    {
+        canMove = true;
     }
 }
 

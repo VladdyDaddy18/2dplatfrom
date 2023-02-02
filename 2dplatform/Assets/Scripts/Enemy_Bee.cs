@@ -97,6 +97,8 @@ public class Enemy_Bee : Enemy
         speed = defaultSpeed;
     }
 
+   
+
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

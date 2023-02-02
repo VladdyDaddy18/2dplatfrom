@@ -395,9 +395,14 @@ MonoBehaviour:
   invincible: 0
   speed: 2
   idleTime: 2
+  checkRadius: 0
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
   bulletPrefab: {fileID: 2946039510947774277, guid: 7f8e817fe526849afb98f4cd4e4ccdbe, type: 3}
   bulletOrigin: {fileID: 1871514476}
   bulletSpeed: 10
+  attackCoolDown: 2
 --- !u!212 &478014482
 SpriteRenderer:
   m_ObjectHideFlags: 0
