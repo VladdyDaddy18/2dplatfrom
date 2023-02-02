@@ -20,7 +20,19 @@ public class Enemy_Trunk : Enemy
         
         CollisionCheck();
 
+        WalkAround();
+        anim.SetFloat("xVelocity", rb.velocity.x);
 
+         idleTimeCounter -= Time.deltaTime;
+
+        bool playerDetected = playerDetection.collider.GetComponent<Player>() != null;
+
+        if(idleTimeCounter < 0 && playerDetected)
+            {
+                idleTimeCounter = idleTime;
+                anim.SetTrigger("attack");
+
+            } 
 
 
 
@@ -46,6 +58,7 @@ public class Enemy_Trunk : Enemy
         GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
 
         newBullet.GetComponent<Bullet>().SetupSpeed(bulletSpeed * facingDirection, 0);
+        Destroy(newBullet, 2f);
     }
 }
 
