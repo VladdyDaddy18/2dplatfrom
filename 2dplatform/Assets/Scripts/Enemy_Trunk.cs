@@ -5,8 +5,11 @@ using UnityEngine;
 public class Enemy_Trunk : Enemy
 {
 
-
     [Header("Trunk Spec's")]
+    [SerializeField] private float moveBackTime;
+                     private float moveBackTimeCounter;
+
+    [Header("Collision Spec's")]
     [SerializeField] private Transform groundBehindCheck;
     private bool wallBehind;
     private bool groundBehind;
@@ -44,6 +47,12 @@ public class Enemy_Trunk : Enemy
        anim.SetFloat("xVelocity", rb.velocity.x);
 
          attackCoolDownCounter -= Time.deltaTime;
+         moveBackTimeCounter -= Time.deltaTime;
+        
+
+        if (playerDetected && moveBackTimeCounter < 0)
+                 moveBackTimeCounter = moveBackTime;
+
 
         if (playerDetection.collider.GetComponent<Player>() != null)
         {
@@ -61,7 +70,7 @@ public class Enemy_Trunk : Enemy
         }
         else
             {
-                if(playerDetected)
+                if(moveBackTimeCounter > 0)
                     WalkBackwards(4);
                 else
                     WalkAround();
@@ -73,10 +82,7 @@ public class Enemy_Trunk : Enemy
 
     private void WalkBackwards(float multiplier)
     {
-        if(wallBehind)
-            return;
-
-        if(!groundBehind)
+        if(wallBehind || !groundBehind)
             return;
         
         rb.velocity = new Vector2(speed * multiplier * -facingDirection, rb.velocity.y);
@@ -84,6 +90,9 @@ public class Enemy_Trunk : Enemy
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
+        
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
+
 
          if(groundCheck != null)
             Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
@@ -94,23 +103,22 @@ public class Enemy_Trunk : Enemy
             Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + playerDetection.distance * facingDirection, wallCheck.position.y));
            }
 
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
+        
         Gizmos.DrawLine(groundBehindCheck.position, new Vector2(groundBehindCheck.position.x, groundBehindCheck.position.y - groundCheckDistance));
     }
 
      protected override void CollisionCheck()
     {
         base.CollisionCheck();
+        
         playerDetected = Physics2D.OverlapCircle(transform.position, checkRadius, whatIsPlayer);
-
         groundBehind = Physics2D.Raycast(groundBehindCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
-        wallBehind = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, groundCheckDistance, whatIsGround);
+        wallBehind = Physics2D.Raycast(wallCheck.position, Vector2.right * (-facingDirection + 1), wallCheckDistance, whatIsGround);
     }
 
       private void AttackEvent()
     {
         GameObject newBullet = Instantiate(bulletPrefab, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
-
         newBullet.GetComponent<Bullet>().SetupSpeed(bulletSpeed * facingDirection, 0);
         Destroy(newBullet, 2f);
     }
