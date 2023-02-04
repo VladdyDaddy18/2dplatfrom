@@ -6,17 +6,22 @@ public class Enemy_Trunk : Enemy
 {
 
 
+    [Header("Trunk Spec's")]
+    [SerializeField] private Transform groundBehindCheck;
+    private bool wallBehind;
+    private bool groundBehind;
     [SerializeField] private float checkRadius;
     [SerializeField] private LayerMask whatIsPlayer;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform bulletOrigin;
-    [SerializeField] private float bulletSpeed;
+     private bool playerDetected;
 
-    private bool playerDetected;
+
 
     [Header("Bullet Specifics")]
     [SerializeField] private float attackCoolDown;
                      private float attackCoolDownCounter;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletOrigin;
+    [SerializeField] private float bulletSpeed;
     protected override void Start()
     {
         base.Start();
@@ -48,15 +53,33 @@ public class Enemy_Trunk : Enemy
                  anim.SetTrigger("attack");
                  canMove = false;
             }
+            else if(playerDetection.distance < 3)
+            {
+                WalkBackwards(1.5f);
+            }
             
         }
         else
             {
-                WalkAround();
+                if(playerDetected)
+                    WalkBackwards(4);
+                else
+                    WalkAround();
             }
 
     
 
+    }
+
+    private void WalkBackwards(float multiplier)
+    {
+        if(wallBehind)
+            return;
+
+        if(!groundBehind)
+            return;
+        
+        rb.velocity = new Vector2(speed * multiplier * -facingDirection, rb.velocity.y);
     }
     protected override void OnDrawGizmos()
     {
@@ -71,13 +94,17 @@ public class Enemy_Trunk : Enemy
             Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + playerDetection.distance * facingDirection, wallCheck.position.y));
            }
 
-        //Gizmos.DrawWireSphere(playerCheck.position, checkRadius);
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
+        Gizmos.DrawLine(groundBehindCheck.position, new Vector2(groundBehindCheck.position.x, groundBehindCheck.position.y - groundCheckDistance));
     }
 
      protected override void CollisionCheck()
     {
         base.CollisionCheck();
         playerDetected = Physics2D.OverlapCircle(transform.position, checkRadius, whatIsPlayer);
+
+        groundBehind = Physics2D.Raycast(groundBehindCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+        wallBehind = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, groundCheckDistance, whatIsGround);
     }
 
       private void AttackEvent()

@@ -395,14 +395,15 @@ MonoBehaviour:
   invincible: 0
   speed: 2
   idleTime: 2
-  checkRadius: 0
+  groundBehindCheck: {fileID: 1394244291}
+  checkRadius: 2.29
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  attackCoolDown: 2
   bulletPrefab: {fileID: 2946039510947774277, guid: 7f8e817fe526849afb98f4cd4e4ccdbe, type: 3}
   bulletOrigin: {fileID: 1871514476}
   bulletSpeed: 10
-  attackCoolDown: 2
 --- !u!212 &478014482
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -471,6 +472,7 @@ Transform:
   - {fileID: 345077549}
   - {fileID: 1478380419}
   - {fileID: 1871514476}
+  - {fileID: 1394244291}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6930,6 +6932,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5569153, y: 1.493629}
   m_EdgeRadius: 0
+--- !u!1 &1394244290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394244291}
+  m_Layer: 0
+  m_Name: GroundBehind
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1394244291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394244290}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.701, y: -0.097, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 478014483}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478380418
 GameObject:
   m_ObjectHideFlags: 0
