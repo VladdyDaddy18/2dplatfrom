@@ -302,7 +302,7 @@ MonoBehaviour:
   idleTime: 2
   moveBackTime: 0.4
   groundBehindCheck: {fileID: 8316377607131335444}
-  checkRadius: 3.28
+  checkRadius: 2
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128

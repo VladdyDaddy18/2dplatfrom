@@ -229,7 +229,7 @@ private void FlipController()
     {
         if(!canBeKnocked)
             return;
-
+        GetComponent<CameraShakeFX>().ScreenShake(-facingDirection);
         isKnocked = true;
         canBeKnocked = false;
 

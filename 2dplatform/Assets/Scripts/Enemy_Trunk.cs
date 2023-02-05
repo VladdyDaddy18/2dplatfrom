@@ -25,6 +25,8 @@ public class Enemy_Trunk : Enemy
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform bulletOrigin;
     [SerializeField] private float bulletSpeed;
+
+    
     protected override void Start()
     {
         base.Start();
@@ -79,6 +81,7 @@ public class Enemy_Trunk : Enemy
     
 
     }
+    
 
     private void WalkBackwards(float multiplier)
     {
