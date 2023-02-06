@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
             //Good Fix//
 
             isWallSliding = true;
+    
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .01f);
         }
 
@@ -152,6 +153,7 @@ private void FlipController()
         Flip();
 
     }
+    
     else if (!facingRight && rb.velocity.x > 0)
     {
         Flip();
