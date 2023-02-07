@@ -10,6 +10,7 @@ public class Enemy : Trap
     [SerializeField] protected float wallCheckDistance;
     [SerializeField] protected Transform wallCheck;
     [SerializeField] protected Transform groundCheck;
+    protected Transform player;
 
     protected RaycastHit2D playerDetection;
 
@@ -34,7 +35,8 @@ public class Enemy : Trap
     protected virtual void Start() 
     {
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();    
+        rb = GetComponent<Rigidbody2D>();  
+        player = Player_Manager.instance.currentPlayer.transform;  
     }
 
     

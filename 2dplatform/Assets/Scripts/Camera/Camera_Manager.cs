@@ -12,7 +12,7 @@ public class Camera_Manager : MonoBehaviour
 
    private void Start() 
    {
-    myCamera.GetComponent<CinemachineVirtualCamera>().Follow = GameObject.Find("Player").transform;
+    myCamera.GetComponent<CinemachineVirtualCamera>().Follow = Player_Manager.instance.currentPlayer.transform;
    }
 
 

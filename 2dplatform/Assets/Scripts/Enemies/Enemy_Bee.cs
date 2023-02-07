@@ -15,7 +15,7 @@ public class Enemy_Bee : Enemy
 
     private bool playerDetected;
     private int idlePointIndex;
-    private Transform player;
+
     private float defaultSpeed;
     
 
@@ -28,7 +28,7 @@ public class Enemy_Bee : Enemy
     {
         defaultSpeed = speed;   
         base.Start();
-        player = GameObject.Find("Player").transform;
+        
     }
 
 
@@ -49,6 +49,9 @@ public class Enemy_Bee : Enemy
         }
 
         playerDetected = Physics2D.OverlapCircle(playerCheck.position, checkRadius, whatIsPlayer);
+
+        if (player == null)
+            return;
 
         if(playerDetected && !aggresive)
         {
