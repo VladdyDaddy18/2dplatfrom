@@ -18,6 +18,8 @@ public class Player_Manager : MonoBehaviour
 
     }
 
+    
+
     public void PlayerRespawn()
     {
         if (currentPlayer == null)
